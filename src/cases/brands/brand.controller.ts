@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, ParseUUIDPipe, Post, Put } from "@nestjs/common";
-import { Brand } from "./brand.service";
+import { Brand } from "./brand.entity";
 import { BrandService } from "./brand.service";
 
 @Controller('brands.service')
@@ -21,14 +21,14 @@ export class BrandController {
   }
 
   @Post()
-  create(@Body() brand.service: Brand): Promise<Brand> {
-    return this.service.save(brand.service);
+  create(@Body() Brand: Brand): Promise<Brand> {
+    return this.service.save(Brand);
   }
 
   @Put(':id')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body() brand.service: Brand
+    @Body() Brand: Brand
   ): Promise<Brand> {
     const found = await this.service.findById(id);
 
@@ -36,8 +36,8 @@ export class BrandController {
       throw new HttpException('Brand not found', HttpStatus.NOT_FOUND);
     }
 
-    brand.service.id = id;
-    return this.service.save(brand.service);
+    Brand.id = id;
+    return this.service.save(Brand);
   }
 
   @Delete(':id')
