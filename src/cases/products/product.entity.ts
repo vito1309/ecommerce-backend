@@ -19,7 +19,6 @@ export class Product {
     @Column('boolean',{nullable: false, default: true})
     active: boolean;
     
-
     @ManyToOne(() => Category,{eager: false, nullable: false})
     category: Category;
     
