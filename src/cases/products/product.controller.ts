@@ -11,11 +11,14 @@ export class ProductController {
   ) {}
 
   @Get()
-  findAll(@Query('categoryId', ParseUUIDPipe) categoryId?: string): Promise<Product[]> {
-
+  async findAll(@Query('categoryId', ParseUUIDPipe) categoryId?: string): Promise<Product[]> {
+    if (categoryId) {
       const category = await this.categoryService.findById(categoryId);
-    return this.service.findAll(category ? category: undefined);
+      return this.service.findAll(category);
     }
+
+    return this.service.findAll();
+  }
   
 
   @Get(':id')

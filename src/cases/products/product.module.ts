@@ -7,8 +7,7 @@ import { Module } from '@nestjs/common';
 @Module({
   imports: [TypeOrmModule.forFeature([Product])],
   providers: [ProductService],
-  controllers: [ProductController],
-  imports: { TypeOrmModule.forFeature([Product]) } from "module";
+  controllers: [ProductController]
 })
 
 export class ProductModule {}
