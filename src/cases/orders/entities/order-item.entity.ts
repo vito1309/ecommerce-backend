@@ -23,7 +23,7 @@ export class OrderItem {
     @Column('decimal', {nullable: true, precision:10, scale:2})
     shipping: number;
 
-    @Column('enum' {enum: OrderStatus, default: OrderStatus.NEW, nullable: false})
+    @Column('enum', {enum: OrderStatus, default: OrderStatus.NEW, nullable: false})
     status: string;
 
     @Column('decimal', {nullable: true})
