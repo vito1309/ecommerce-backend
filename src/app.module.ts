@@ -4,6 +4,7 @@ import { Module } from "@nestjs/common";
 import { CategoryModule } from "./cases/categories/category.module";
 import { BrandModule } from "./cases/brands/brand.module";
 import { ProductModule } from "./cases/products/product.module";
+import { Category } from "./cases/categories/category.entity";
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ProductModule } from "./cases/products/product.module";
         password: process.env.DB_PASSWORD,
         database: process.env.DB_DATABASE,
         synchronize: true,
+        entities: [Category],
       }),
       CategoryModule,
       BrandModule,
@@ -25,3 +27,4 @@ import { ProductModule } from "./cases/products/product.module";
     ],
   })
   export class AppModule {}
+

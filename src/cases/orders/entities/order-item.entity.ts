@@ -1,37 +1,21 @@
-import { Customer } from "src/cases/customer/customer.entity";
-import { OrderItem, Entity, PrimaryGeneratedOrder, Column, ManyToOne } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Order } from "./order.entity";
+import { Product } from "src/cases/products/product.entity";
 
-enum OrderStatus{
-    NEW='NEW',
-    SEPARATION='SERPATARION',
-    INVOICED='INVOICED',
-    SHIPPED='SHIPPED',
-    DELIVERED='DELIVERED',
-    CANCELED='CANCELLED'
-
-}
-
-@Entity('Order')
+@Entity('order-item')
 export class OrderItem {
-    @PrimaryGeneratedOrder('uuid')
-    id: string;
-    
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @ManyToOne(() => Customer, {eager:true , nullable: false})
-    customer: Customer;
+  @ManyToOne(() => Order)
+  order: Order;
 
-    @Column('decimal', {nullable: true, precision:10, scale:2})
-    shipping: number;
+  @ManyToOne(() => Product, {eager: true, nullable: false})
+  product: Product;
 
-    @Column('enum', {enum: OrderStatus, default: OrderStatus.NEW, nullable: false})
-    status: string;
+  @Column({nullable: false})
+  quantity: number;
 
-    @Column('decimal', {nullable: true})
-    total: number;
-
-
-    createdAt: Date;
-
-    updatedAt: Date;
-
+  @Column('decimal', {nullable: false, precision: 10, scale: 2})
+  value: number;
 }

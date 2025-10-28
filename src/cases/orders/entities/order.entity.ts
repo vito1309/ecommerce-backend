@@ -1,42 +1,42 @@
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { OrderItem } from "./order-item.entity";
 import { Customer } from "src/cases/customer/customer.entity";
-import { OrderItem, Entity, PrimaryGeneratedOrder, Column, ManyToOne, CreateDateColumn, OneToMany } from "typeorm";
 
-enum OrderStatus{
-    NEW='NEW',
-    SEPARATION='SERPATARION',
-    INVOICED='INVOICED',
-    SHIPPED='SHIPPED',
-    DELIVERED='DELIVERED',
-    CANCELED='CANCELLED'
-
+enum OrderStatus {
+  NEW = 'NEW',
+  SEPARATION = 'SEPARATION',
+  INVOICED = 'INVOICED',
+  SHIPPED = 'SHIPPED',
+  DELIVERED = 'DELIVERED',
+  CANCELED = 'CANCELADO'
 }
 
-@Entity('Order')
-export class OrderItem {
-    @PrimaryGeneratedOrder('uuid')
-    id: string;
-    
+@Entity('order')
+export class Order {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @ManyToOne(() => Customer, {eager:true , nullable: false})
-    customer: Customer;
+  @ManyToOne(() => Customer, {eager: true, nullable: false})
+  customer: Customer;
 
-    @Column('decimal', {nullable: true, precision:10, scale:2})
-    shipping: number;
+  @Column('decimal', {nullable: true, precision: 10, scale: 2})
+  shipping: number;
 
-    @Column('enum', {enum: OrderStatus, default: OrderStatus.NEW, nullable: false})
-    status: string;
+  @Column('enum', {enum: OrderStatus, default: OrderStatus.NEW})
+  status: string;
 
-    @Column('decimal', {nullable: true, precision: 30, scale:2})
-    total: number;
-    
-    @OneToMany(()=> OrderItem, (item) => item.order,{
-        eager:true,
-        cascade:true
-    })
+  @Column('decimal', {nullable: true, precision: 10, scale: 2})
+  total: number;
 
-    @CreateDateColumn()
-    createdAt: Date;
-    @CreateDateColumn()
-    updatedAt: Date;
+  @OneToMany(() => OrderItem, (item) => item.order,{
+    eager: true,
+    cascade: true
+  })
+  items: OrderItem[];
 
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }
